@@ -68,3 +68,51 @@ def crear_aviso(request):
         "notificaciones/crear_aviso.html",
         {"form": form}
     )
+
+@login_required
+def aviso_basura(request):
+    if request.method == "POST":
+
+        aviso = Aviso.objects.create(
+            tipo="BASURA",
+            titulo="Camión de basura",
+            mensaje="🚛 El camión recolector de basura acaba de ingresar al fraccionamiento.",
+            activo=True,
+        )
+
+        residentes = Residente.objects.filter(
+            activo=True
+        ).exclude(
+            correo=""
+        )
+
+        for residente in residentes:
+
+            enviada = False
+            fecha_envio = None
+
+            try:
+                send_mail(
+                    aviso.titulo,
+                    aviso.mensaje,
+                    None,
+                    [residente.correo],
+                    fail_silently=False,
+                )
+
+                enviada = True
+                fecha_envio = timezone.now()
+
+            except Exception:
+                enviada = False
+
+            Notificacion.objects.create(
+                residente=residente,
+                aviso=aviso,
+                enviada=enviada,
+                fecha_envio=fecha_envio,
+            )
+
+        return redirect("lista_avisos")
+
+    return redirect("lista_avisos")
