@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo aviso{% endblock %}
+
+{% block content %}
+
+<h2>Nuevo aviso</h2>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-body">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">
+                Guardar aviso
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
