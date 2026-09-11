@@ -1,3 +1,1 @@
-from django.test import TestCase
-
-# Create your tests here.
+# Pruebas de pagos pendientes de ampliar.

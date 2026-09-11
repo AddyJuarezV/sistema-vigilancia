@@ -1,3 +1,1 @@
-from django.test import TestCase
-
-# Create your tests here.
+# Este módulo utiliza autenticación y grupos nativos de Django.

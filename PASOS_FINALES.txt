@@ -1,0 +1,55 @@
+SISTEMA VIGILANCIA - PASOS FINALES
+===================================
+
+1) DETENER EL SERVIDOR CON CTRL+C.
+
+2) EXTRAER EL CONTENIDO DE ESTE ZIP DENTRO DE:
+   C:\Users\adria\Desktop\sistema_vigilancia
+
+   Acepta reemplazar los archivos existentes.
+   El ZIP NO contiene venv, .git ni db.sqlite3, por lo que conservarás
+   tu entorno virtual, historial Git y base de datos local.
+
+3) ABRIR POWERSHELL:
+
+cd $HOME\Desktop\sistema_vigilancia
+.\venv\Scripts\Activate.ps1
+
+4) INSTALAR/VERIFICAR DEPENDENCIAS:
+
+python -m pip install -r requirements.txt
+
+5) GENERAR TODAS LAS MIGRACIONES NUEVAS:
+
+python manage.py makemigrations
+
+6) APLICARLAS:
+
+python manage.py migrate
+
+7) COMPROBAR DJANGO:
+
+python manage.py check
+
+8) INICIAR:
+
+python manage.py runserver
+
+9) PROBAR:
+
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/pagos/
+http://127.0.0.1:8000/accesos/
+http://127.0.0.1:8000/servicios/
+http://127.0.0.1:8000/avisos/
+
+10) CUANDO TODO FUNCIONE, SUBIR A GIT:
+
+git status
+git add .
+git commit -m "Completar sistema integral de vigilancia"
+git push origin main
+
+NOTA SOBRE CORREOS:
+Por defecto los correos aparecen en PowerShell (modo consola).
+Para correo real, configura un archivo .env tomando .env.example como base.

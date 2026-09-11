@@ -1,3 +1,1 @@
-from django.contrib import admin
-
-# Register your models here.
+# Los usuarios y grupos se administran con django.contrib.auth.
