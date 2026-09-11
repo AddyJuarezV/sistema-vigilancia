@@ -7,33 +7,145 @@
     <title>{% block title %}Sistema de Vigilancia{% endblock %}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            width: 250px;
+            background: #111827;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h4 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: #d1d5db;
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 15px 25px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content {
+            padding: 25px;
+        }
+    </style>
 </head>
 
 <body>
 
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-sm btn-danger">
-        Cerrar sesión
-    </button>
-</form>
+<div class="sidebar">
 
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">
-            Sistema de Vigilancia
-        </span>
+    <h4>
+        <i class="bi bi-shield-lock"></i>
+        Vigilancia
+    </h4>
 
-        <span class="text-white">
-            {{ user.username }}
-        </span>
-    </div>
-</nav>
+    <a href="/">
+        <i class="bi bi-speedometer2 me-2"></i>
+        Dashboard
+    </a>
 
-<div class="container mt-4">
-    {% block content %}
-    {% endblock %}
+    <a href="/residentes/viviendas/">
+        <i class="bi bi-house-door me-2"></i>
+        Viviendas
+    </a>
+
+    <a href="/residentes/residentes/">
+        <i class="bi bi-people me-2"></i>
+        Residentes
+    </a>
+
+    <a href="/avisos/">
+        <i class="bi bi-bell me-2"></i>
+        Avisos
+    </a>
+
+    <a href="#">
+        <i class="bi bi-cash-stack me-2"></i>
+        Pagos
+    </a>
+
+    <a href="#">
+        <i class="bi bi-person-badge me-2"></i>
+        Accesos
+    </a>
+
+    <a href="#">
+        <i class="bi bi-truck me-2"></i>
+        Servicios
+    </a>
+
 </div>
+
+
+<div class="main-content">
+
+    <div class="topbar">
+
+        <div>
+            <strong>Sistema Integral de Vigilancia</strong>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <span>
+                <i class="bi bi-person-circle"></i>
+                {{ user.username }}
+            </span>
+
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Salir
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="content">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 

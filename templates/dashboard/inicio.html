@@ -1,67 +1,126 @@
 {% extends "base.html" %}
 
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
 
-<h1>Dashboard</h1>
-
-<p>Bienvenido {{ user.username }}</p>
+<h2 class="mb-1">Dashboard</h2>
+<p class="text-muted mb-4">Resumen general del fraccionamiento</p>
 
 {% if es_admin %}
-    <div class="alert alert-success">
-        Rol: Administrador
-    </div>
+<div class="alert alert-success">
+    Rol: Administrador
+</div>
 {% elif es_guardia %}
-    <div class="alert alert-primary">
-        Rol: Guardia
-    </div>
-{% else %}
-    <div class="alert alert-warning">
-        Usuario sin rol asignado
-    </div>
+<div class="alert alert-primary">
+    Rol: Guardia
+</div>
 {% endif %}
 
-<div class="row mt-4">
+<div class="row g-4 mb-4">
 
-    <div class="col-md-3">
-        <div class="card shadow-sm">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5>Recaudado</h5>
-                <h2>$0</h2>
+                <small class="text-muted">Recaudado esta semana</small>
+                <h2 class="mt-2">$0</h2>
+                <i class="bi bi-cash-stack fs-3 text-success"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card shadow-sm">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5>Pagos pendientes</h5>
-                <h2>0</h2>
+                <small class="text-muted">Pagos pendientes</small>
+                <h2 class="mt-2">0</h2>
+                <i class="bi bi-clock-history fs-3 text-warning"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card shadow-sm">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5>Visitantes hoy</h5>
-                <h2>0</h2>
+                <small class="text-muted">Visitantes hoy</small>
+                <h2 class="mt-2">0</h2>
+                <i class="bi bi-people fs-3 text-primary"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card shadow-sm">
+    <div class="col-md-6 col-xl-3">
+        <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <h5>Servicios dentro</h5>
-                <h2>0</h2>
+                <small class="text-muted">Servicios dentro</small>
+                <h2 class="mt-2">0</h2>
+                <i class="bi bi-truck fs-3 text-danger"></i>
             </div>
         </div>
     </div>
 
 </div>
+
+
+<div class="row g-4">
+
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5>Recaudación semanal</h5>
+                <canvas id="graficaRecaudacion"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5>Estado de pagos</h5>
+                <canvas id="graficaPagos"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctxRecaudacion = document.getElementById("graficaRecaudacion");
+
+new Chart(ctxRecaudacion, {
+    type: "bar",
+    data: {
+        labels: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
+        datasets: [{
+            label: "Recaudación",
+            data: [3500, 4200, 3900, 5100]
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+
+
+const ctxPagos = document.getElementById("graficaPagos");
+
+new Chart(ctxPagos, {
+    type: "doughnut",
+    data: {
+        labels: ["Pagado", "Pendiente"],
+        datasets: [{
+            data: [75, 25]
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+
+</script>
 
 {% endblock %}
