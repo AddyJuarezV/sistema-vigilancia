@@ -11,6 +11,13 @@
 
 <body>
 
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-danger">
+        Cerrar sesión
+    </button>
+</form>
+
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">

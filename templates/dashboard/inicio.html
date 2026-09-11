@@ -10,6 +10,20 @@ Dashboard
 
 <p>Bienvenido {{ user.username }}</p>
 
+{% if es_admin %}
+    <div class="alert alert-success">
+        Rol: Administrador
+    </div>
+{% elif es_guardia %}
+    <div class="alert alert-primary">
+        Rol: Guardia
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        Usuario sin rol asignado
+    </div>
+{% endif %}
+
 <div class="row mt-4">
 
     <div class="col-md-3">
