@@ -1,126 +1,15 @@
-{% extends "base.html" %}
-
-{% block title %}Dashboard{% endblock %}
-
-{% block content %}
-
-<h2 class="mb-1">Dashboard</h2>
-<p class="text-muted mb-4">Resumen general del fraccionamiento</p>
-
-{% if es_admin %}
-<div class="alert alert-success">
-    Rol: Administrador
+{% extends 'base.html' %}{% block title %}Dashboard · VigiControl{% endblock %}{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-4"><div><h2 class="fw-bold mb-1">Dashboard</h2><p class="text-muted mb-0">Resumen operativo del fraccionamiento</p></div><span class="badge text-bg-primary p-2">{% if es_admin %}Administrador{% else %}Guardia{% endif %}</span></div>
+<div class="row g-3 mb-4">
+  <div class="col-md-6 col-xl-3"><div class="card metric-card h-100"><div class="card-body d-flex justify-content-between"><div><small class="text-muted">Recaudado esta semana</small><h3 class="mt-2 mb-0">${{ recaudado_semana|floatformat:2 }}</h3></div><div class="metric-icon bg-success-subtle text-success"><i class="bi bi-cash-stack"></i></div></div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card metric-card h-100"><div class="card-body d-flex justify-content-between"><div><small class="text-muted">Cuotas pendientes</small><h3 class="mt-2 mb-0">{{ pagos_pendientes }}</h3></div><div class="metric-icon bg-warning-subtle text-warning"><i class="bi bi-clock-history"></i></div></div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card metric-card h-100"><div class="card-body d-flex justify-content-between"><div><small class="text-muted">Visitantes hoy</small><h3 class="mt-2 mb-0">{{ visitantes_hoy }}</h3></div><div class="metric-icon bg-primary-subtle text-primary"><i class="bi bi-people"></i></div></div></div></div>
+  <div class="col-md-6 col-xl-3"><div class="card metric-card h-100"><div class="card-body d-flex justify-content-between"><div><small class="text-muted">Servicios dentro</small><h3 class="mt-2 mb-0">{{ servicios_dentro }}</h3></div><div class="metric-icon bg-danger-subtle text-danger"><i class="bi bi-truck"></i></div></div></div></div>
 </div>
-{% elif es_guardia %}
-<div class="alert alert-primary">
-    Rol: Guardia
-</div>
-{% endif %}
-
-<div class="row g-4 mb-4">
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <small class="text-muted">Recaudado esta semana</small>
-                <h2 class="mt-2">$0</h2>
-                <i class="bi bi-cash-stack fs-3 text-success"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <small class="text-muted">Pagos pendientes</small>
-                <h2 class="mt-2">0</h2>
-                <i class="bi bi-clock-history fs-3 text-warning"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <small class="text-muted">Visitantes hoy</small>
-                <h2 class="mt-2">0</h2>
-                <i class="bi bi-people fs-3 text-primary"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <small class="text-muted">Servicios dentro</small>
-                <h2 class="mt-2">0</h2>
-                <i class="bi bi-truck fs-3 text-danger"></i>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="row g-4">
-
-    <div class="col-lg-8">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h5>Recaudación semanal</h5>
-                <canvas id="graficaRecaudacion"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h5>Estado de pagos</h5>
-                <canvas id="graficaPagos"></canvas>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-
-const ctxRecaudacion = document.getElementById("graficaRecaudacion");
-
-new Chart(ctxRecaudacion, {
-    type: "bar",
-    data: {
-        labels: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
-        datasets: [{
-            label: "Recaudación",
-            data: [3500, 4200, 3900, 5100]
-        }]
-    },
-    options: {
-        responsive: true
-    }
-});
-
-
-const ctxPagos = document.getElementById("graficaPagos");
-
-new Chart(ctxPagos, {
-    type: "doughnut",
-    data: {
-        labels: ["Pagado", "Pendiente"],
-        datasets: [{
-            data: [75, 25]
-        }]
-    },
-    options: {
-        responsive: true
-    }
-});
-
-</script>
-
-{% endblock %}
+<div class="row g-3 mb-4"><div class="col-lg-8"><div class="card border-0 shadow-sm h-100"><div class="card-body"><h5>Recaudación · últimas 4 semanas</h5><canvas id="recaudacion" height="110"></canvas></div></div></div><div class="col-lg-4"><div class="card border-0 shadow-sm h-100"><div class="card-body"><h5>Estado de cuotas</h5><canvas id="estados" height="210"></canvas></div></div></div></div>
+<div class="row g-3"><div class="col-lg-7"><div class="card border-0 shadow-sm"><div class="card-body"><h5>Visitantes actualmente dentro</h5><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Visitante</th><th>Destino</th><th>Placas</th><th>Entrada</th></tr></thead><tbody>{% for a in accesos_activos %}<tr><td>{{ a.nombre }}</td><td>{{ a.vivienda.numero }}</td><td>{{ a.placas|default:'—' }}</td><td>{{ a.entrada|date:'H:i' }}</td></tr>{% empty %}<tr><td colspan="4" class="text-muted">Sin visitantes dentro.</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+<div class="col-lg-5"><div class="card border-0 shadow-sm"><div class="card-body"><h5>Datos del fraccionamiento</h5><div class="d-flex justify-content-between py-2 border-bottom"><span>Viviendas activas</span><strong>{{ viviendas }}</strong></div><div class="d-flex justify-content-between py-2"><span>Residentes activos</span><strong>{{ residentes }}</strong></div></div></div></div></div>
+{% endblock %}{% block extra_js %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>
+new Chart(document.getElementById('recaudacion'),{type:'bar',data:{labels:{{ labels_recaudacion|safe }},datasets:[{label:'Monto recaudado',data:{{ datos_recaudacion|safe }},borderWidth:1}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('estados'),{type:'doughnut',data:{labels:['Pagadas','Pendientes'],datasets:[{data:[{{ pagados }},{{ no_pagados }}]}]},options:{responsive:true}});
+</script>{% endblock %}

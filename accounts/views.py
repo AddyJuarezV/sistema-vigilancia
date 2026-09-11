@@ -1,3 +1,1 @@
-from django.shortcuts import render
-
-# Create your views here.
+# Este módulo utiliza autenticación y grupos nativos de Django.

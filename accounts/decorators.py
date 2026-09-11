@@ -1,41 +1,22 @@
-from django.contrib.auth.decorators import user_passes_test
+from functools import wraps
+from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
 
 
-def administrador_required(view_func):
-    return user_passes_test(
-        lambda user: (
-            user.is_authenticated
-            and (
-                user.is_superuser
-                or user.groups.filter(name="Administrador").exists()
-            )
-        ),
-        login_url="/accounts/login/",
-    )(view_func)
+def _require_groups(groups):
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapper(request, *args, **kwargs):
+            user = request.user
+            if not user.is_authenticated:
+                return redirect_to_login(request.get_full_path())
+            if user.is_superuser or user.groups.filter(name__in=groups).exists():
+                return view_func(request, *args, **kwargs)
+            raise PermissionDenied
+        return wrapper
+    return decorator
 
 
-def guardia_required(view_func):
-    return user_passes_test(
-        lambda user: (
-            user.is_authenticated
-            and (
-                user.is_superuser
-                or user.groups.filter(name="Guardia").exists()
-            )
-        ),
-        login_url="/accounts/login/",
-    )(view_func)
-
-def personal_vigilancia_required(view_func):
-    return user_passes_test(
-        lambda user: (
-            user.is_authenticated
-            and (
-                user.is_superuser
-                or user.groups.filter(
-                    name__in=["Administrador", "Guardia"]
-                ).exists()
-            )
-        ),
-        login_url="/accounts/login/",
-    )(view_func)
+administrador_required = _require_groups(['Administrador'])
+guardia_required = _require_groups(['Guardia'])
+personal_vigilancia_required = _require_groups(['Administrador', 'Guardia'])

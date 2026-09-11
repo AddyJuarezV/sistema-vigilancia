@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+# Este módulo utiliza autenticación y grupos nativos de Django.
