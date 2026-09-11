@@ -65,46 +65,48 @@
 
 <div class="sidebar">
 
-    <h4>
-        <i class="bi bi-shield-lock"></i>
-        Vigilancia
-    </h4>
+    {% if user.groups.all.0.name == "Administrador" %}
 
-    <a href="/">
-        <i class="bi bi-speedometer2 me-2"></i>
-        Dashboard
-    </a>
+<a href="#">
+    <i class="bi bi-cash-stack me-2"></i>
+    Pagos
+</a>
 
-    <a href="/residentes/viviendas/">
-        <i class="bi bi-house-door me-2"></i>
-        Viviendas
-    </a>
+<a href="/residentes/viviendas/">
+    <i class="bi bi-house-door me-2"></i>
+    Viviendas
+</a>
 
-    <a href="/residentes/residentes/">
-        <i class="bi bi-people me-2"></i>
-        Residentes
-    </a>
+<a href="/residentes/residentes/">
+    <i class="bi bi-people me-2"></i>
+    Residentes
+</a>
 
-    <a href="/avisos/">
-        <i class="bi bi-bell me-2"></i>
-        Avisos
-    </a>
+<a href="/avisos/">
+    <i class="bi bi-bell me-2"></i>
+    Avisos
+</a>
 
-    <a href="#">
-        <i class="bi bi-cash-stack me-2"></i>
-        Pagos
-    </a>
+{% endif %}
 
-    <a href="#">
-        <i class="bi bi-person-badge me-2"></i>
-        Accesos
-    </a>
+{% if user.groups.all.0.name == "Guardia" %}
 
-    <a href="#">
-        <i class="bi bi-truck me-2"></i>
-        Servicios
-    </a>
+<a href="#">
+    <i class="bi bi-person-badge me-2"></i>
+    Accesos
+</a>
 
+<a href="#">
+    <i class="bi bi-truck me-2"></i>
+    Servicios
+</a>
+
+<a href="/avisos/">
+    <i class="bi bi-bell me-2"></i>
+    Avisos
+</a>
+
+{% endif %}
 </div>
 
 
