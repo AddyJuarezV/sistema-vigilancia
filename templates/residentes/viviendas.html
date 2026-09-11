@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Viviendas{% endblock %}
+
+{% block content %}
+
+<h2>Viviendas</h2>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-body">
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Calle</th>
+                    <th>Sección</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for vivienda in viviendas %}
+                <tr>
+                    <td>{{ vivienda.numero }}</td>
+                    <td>{{ vivienda.calle }}</td>
+                    <td>{{ vivienda.seccion }}</td>
+                    <td>
+                        {% if vivienda.activa %}
+                            <span class="badge bg-success">Activa</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactiva</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="4">No hay viviendas registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

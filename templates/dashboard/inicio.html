@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<p>Bienvenido {{ user.username }}</p>
+
+<div class="row mt-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Recaudado</h5>
+                <h2>$0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Pagos pendientes</h5>
+                <h2>0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Visitantes hoy</h5>
+                <h2>0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Servicios dentro</h5>
+                <h2>0</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

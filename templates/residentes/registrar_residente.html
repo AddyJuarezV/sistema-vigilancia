@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar residente{% endblock %}
+
+{% block content %}
+
+<h2>Registrar residente</h2>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-body">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">
+                Guardar residente
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
