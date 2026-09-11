@@ -1,3 +1,4 @@
+from accounts.decorators import personal_vigilancia_required
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -8,7 +9,7 @@ from .models import Aviso, Notificacion
 from .forms import AvisoForm
 
 
-@login_required
+@personal_vigilancia_required
 def lista_avisos(request):
     avisos = Aviso.objects.all().order_by("-fecha")
     return render(
@@ -18,7 +19,7 @@ def lista_avisos(request):
     )
 
 
-@login_required
+@personal_vigilancia_required
 def crear_aviso(request):
     if request.method == "POST":
         form = AvisoForm(request.POST)
@@ -69,7 +70,7 @@ def crear_aviso(request):
         {"form": form}
     )
 
-@login_required
+@personal_vigilancia_required
 def aviso_basura(request):
     if request.method == "POST":
 

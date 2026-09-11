@@ -1,3 +1,4 @@
+from accounts.decorators import administrador_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Vivienda, Residente
@@ -14,7 +15,7 @@ def lista_viviendas(request):
     )
 
 
-@login_required
+@administrador_required
 def lista_residentes(request):
     residentes = Residente.objects.select_related("vivienda").all()
     return render(
@@ -24,7 +25,7 @@ def lista_residentes(request):
     )
 
 
-@login_required
+@administrador_required
 def registrar_vivienda(request):
     if request.method == "POST":
         form = ViviendaForm(request.POST)
@@ -42,7 +43,7 @@ def registrar_vivienda(request):
     )
 
 
-@login_required
+@administrador_required
 def registrar_residente(request):
     if request.method == "POST":
         form = ResidenteForm(request.POST)
